@@ -9,7 +9,7 @@ public class Hand {
 
     public Hand(int count) {
         for(int i = 0; i < count; i++) {
-            cards.add(new Card(ran.nextInt(4)+1, ran.nextInt(9)+1));
+            cards.add(new Card(ran.nextInt(4), ran.nextInt(9)+1));
         }
     }
 
@@ -18,4 +18,14 @@ public class Hand {
         deck.cards.add(cards.get(index));
         cards.remove(index);
     }
+
+    public String toString() {
+        String print = "";
+        for(int i = 0; i < cards.size(); i++) {
+            print += "(" + cards.get(i).color + ", " + String.valueOf(cards.get(i).value) + ") ";
+        }
+
+        return print;
+    }
+
 }
