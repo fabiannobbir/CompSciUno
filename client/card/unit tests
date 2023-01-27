@@ -1,0 +1,20 @@
+package Client;
+import Client.card.*;
+import java.util.Scanner;
+
+class Main{
+    public static Hand hand;
+    public static Scanner reader;
+    public static void main(String[] args) {
+        setup();
+    }
+
+    public static void setup() {
+        hand = new Hand(200);
+        reader = new Scanner(System.in);
+        
+
+        System.out.println(hand);
+    }
+}
+
