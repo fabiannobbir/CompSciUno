@@ -1,18 +1,20 @@
 package Client;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
+import Client.card.*;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 class Main{
+    public static ArrayList<Player> players;
+    public static Scanner reader;
     public static void main(String[] args) {
-        try{
-            HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-        }catch(Exception ignore){}
+        setup();
+    }
+
+    public static void setup() {
+        players = new ArrayList<Player>();
+        players.add(new Player("ryan dood", "password", 7));
+        reader = new Scanner(System.in);
+        System.out.println(players.get(0));
     }
 }
 
-//testing github
