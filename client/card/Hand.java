@@ -3,13 +3,13 @@ package Client.card;
 import java.util.*;
 
 public class Hand {
-    ArrayList<Card> cards = new ArrayList<Card>();
+    public ArrayList<Card> cards = new ArrayList<Card>();
     Random ran = new Random();
 
 
     public Hand(int count) {
         for(int i = 0; i < count; i++) {
-            cards.add(new Card(ran.nextInt(4), ran.nextInt(9)+1));
+            cards.add(new Card());
         }
     }
 

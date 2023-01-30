@@ -3,7 +3,7 @@ package Client.card;
 public class Player {
     public String username = "";
     public String id = "";
-    Hand hand;
+    public Hand hand;
     
     public Player(String username, String id, int numCards) {
         this.username = username;
