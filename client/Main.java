@@ -2,7 +2,8 @@ package Client;
 import Client.card.*;
 import java.util.Scanner;
 import java.util.ArrayList;
-//TODO: work on checking win states and conditions
+//TODO: create reverse cards, +2 and +4, wild cards.
+//TODO: create computer bot.
 class Main{
     public static ArrayList<Player> players = new ArrayList<Player>();
     public static Scanner reader = new Scanner(System.in);
@@ -14,13 +15,10 @@ class Main{
 
   
     public static void main(String[] args) {
-        setup(1);
+        setup(2);
         
 
-        while(gameRun) {
-          play();
-          checkWin();
-        }
+        play();
 
         System.out.println(winner + " Wins");
     }
@@ -52,20 +50,25 @@ class Main{
 
     public static void play() {
       //int index;
-      for(int i = 0; i < players.size(); i++) {
-        System.out.println("The top card in the deck is: " + deck.topCard());
-        prompt(players.get(i));
+      if(gameRun) {
+        for(int i = 0; i < players.size(); i++) {
+          prompt(i);
 
 
-        System.out.println("________________________________________________________");
-        
+          System.out.println("________________________________________________________");
+          
+        }
       }
     }
 
 
-    public static void prompt(Player player) {
+    public static void prompt(int playerIndex) {
+      Player player = players.get(playerIndex);
+      System.out.println("The top card in the deck is: " + deck.topCard());
       System.out.println("This is " + player.username + " turn.");
       System.out.println("These are your cards: " + player.hand);
+      otherPlayers(player);
+      
       if(anyMatching(player)) {
         int index;
         System.out.println("What card would you like to put down?");
@@ -76,7 +79,7 @@ class Main{
           player.hand.addToDeck(index, deck);
         }else {
           System.out.println("This is not a valid card. Try again.");
-          prompt(player);
+          prompt(playerIndex);
         }
       } else {
         System.out.println("There are no cards able to be placed. Enter any key to add a card to your deck.");
@@ -84,8 +87,10 @@ class Main{
         //BUG: skips this prompt?!?! SOLVED https://www.freecodecamp.org/news/java-scanner-nextline-call-gets-skipped-solved/ added an extra nextline in the setup function
         reader.nextLine();
         player.hand.cards.add(new Card());
-        prompt(player);
+        prompt(playerIndex);
       }
+
+      checkWin();
       
     }
 
@@ -118,6 +123,14 @@ class Main{
           winner = players.get(i).username;
         }
       }
+    }
+
+    public static void otherPlayers(Player player) {
+        for(int i = 0; i < players.size(); i++) {
+          if(players.get(i) != player) {
+              System.out.println(players.get(i));
+          }
+        }
     }
 
 }
