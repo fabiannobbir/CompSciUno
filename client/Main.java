@@ -9,6 +9,7 @@ class Main{
     public static Deck deck = new Deck();
     //public static Card topCard = new Card();
     public static boolean gameRun = true;
+    public static String winner = "";
 
 
   
@@ -18,11 +19,14 @@ class Main{
 
         while(gameRun) {
           play();
+          checkWin();
         }
+
+        System.out.println(winner + " Wins");
     }
 
 
-
+    
 
     public static void setup(int player_count) {
         String username;
@@ -107,6 +111,14 @@ class Main{
     }
 
 
+    public static void checkWin() {
+      for(int i = 0; i < players.size(); i++) {
+        if(players.get(i).hand.cards.size() == 0) {
+          gameRun = false;
+          winner = players.get(i).username;
+        }
+      }
+    }
 
 }
 
