@@ -2,7 +2,7 @@ package Client;
 import Client.card.*;
 import java.util.Scanner;
 import java.util.ArrayList;
-
+//TODO: work on checking win states and conditions
 class Main{
     public static ArrayList<Player> players = new ArrayList<Player>();
     public static Scanner reader = new Scanner(System.in);
@@ -105,6 +105,7 @@ class Main{
       }
       return false;
     }
+
 
 
 }
