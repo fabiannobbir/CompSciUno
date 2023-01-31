@@ -1,4 +1,4 @@
-package Client.card;
+package client.card;
 import java.util.*;
 
 public class Card {
