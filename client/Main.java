@@ -1,9 +1,12 @@
-package Client;
-import Client.card.*;
+package client;
+
+import client.card.*;
 import java.util.Scanner;
 import java.util.ArrayList;
+
 //TODO: create reverse cards, +2 and +4, wild cards.
 //TODO: create computer bot.
+
 class Main{
     public static ArrayList<Player> players = new ArrayList<Player>();
     public static Scanner reader = new Scanner(System.in);
@@ -34,12 +37,10 @@ class Main{
         for(int i = 0; i < player_count; i++) {
             System.out.println("Username: ");
             username = reader.nextLine();
-            System.out.println("id: ");
-            id = reader.nextLine();
             System.out.println("numCards: ");
             numCards = reader.nextInt();
 
-            players.add(new Player(username, id, numCards));
+            players.add(new Player(username, numCards));
             reader.nextLine(); //this is to clear the input buffer  https://www.freecodecamp.org/news/java-scanner-nextline-call-gets-skipped-solved/
         }
         
@@ -65,8 +66,8 @@ class Main{
     public static void prompt(int playerIndex) {
       Player player = players.get(playerIndex);
       System.out.println("The top card in the deck is: " + deck.topCard());
-      System.out.println("This is " + player.username + " turn.");
-      System.out.println("These are your cards: " + player.hand);
+      System.out.println("This is " + player.getUsername() + " turn.");
+      System.out.println("These are your cards: " + player.getHand());
       otherPlayers(player);
       
       if(anyMatching(player)) {
@@ -76,7 +77,7 @@ class Main{
         reader.nextLine(); //input buffer
         
         if(checkCard(player, index)) {
-          player.hand.addToDeck(index, deck);
+          player.getHand().addToDeck(index, deck);
         }else {
           System.out.println("This is not a valid card. Try again.");
           prompt(playerIndex);
@@ -86,7 +87,7 @@ class Main{
         //System.out.println("do not skip this line");
         //BUG: skips this prompt?!?! SOLVED https://www.freecodecamp.org/news/java-scanner-nextline-call-gets-skipped-solved/ added an extra nextline in the setup function
         reader.nextLine();
-        player.hand.cards.add(new Card());
+        player.getHand().cards.add(new Card());
         prompt(playerIndex);
       }
 
@@ -96,7 +97,7 @@ class Main{
 
     public static boolean anyMatching(Player player) {
       //if there are no possible cards to be placed down in comparision with the top of the deck, then this will return false.
-      ArrayList<Card> playerCards = player.hand.cards;
+      ArrayList<Card> playerCards = player.getHand().cards;
       for(int i = 0; i < playerCards.size(); i++) {
         if(playerCards.get(i).value == deck.topCard().value || playerCards.get(i).color.equals(deck.topCard().color)) {
             return true;
@@ -108,7 +109,7 @@ class Main{
     
     public static boolean checkCard(Player player, int index) {
       //Checks if the player may actually add the card on top of the stack, and will disallow them if it does not have the same color or number.
-      Card playerCard = player.hand.cards.get(index);
+      Card playerCard = player.getHand().cards.get(index);
       if(deck.topCard().value == playerCard.value || deck.topCard().color.equals(playerCard.color)) {
         return true;
       }
@@ -118,9 +119,9 @@ class Main{
 
     public static void checkWin() {
       for(int i = 0; i < players.size(); i++) {
-        if(players.get(i).hand.cards.size() == 0) {
+        if(players.get(i).getHand().cards.size() == 0) {
           gameRun = false;
-          winner = players.get(i).username;
+          winner = players.get(i).getUsername();
         }
       }
     }
@@ -134,4 +135,3 @@ class Main{
     }
 
 }
-
