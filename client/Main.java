@@ -31,7 +31,7 @@ class Main{
 
     public static void setup(int player_count) {
         String username;
-        String id;
+        //String id;
         int numCards;
 
         for(int i = 0; i < player_count; i++) {
@@ -51,7 +51,7 @@ class Main{
 
     public static void play() {
       //int index;
-      if(gameRun) {
+      while(gameRun) {
         for(int i = 0; i < players.size(); i++) {
           prompt(i);
 
