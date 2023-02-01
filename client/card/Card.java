@@ -20,6 +20,7 @@ public class Card implements Serializable {
     * */
   
     public Card(int col, int value) {
+      //pretty sure unused.
         this.color = colors[col];
         this.value = value;
 
@@ -27,7 +28,8 @@ public class Card implements Serializable {
     
     public Card() {
       this.color = colors[ran.nextInt(4)];
-      this.value = ran.nextInt(9)+1;
+      this.value = ran.nextInt(14)+1;
+
     }
 
     public String toString() {

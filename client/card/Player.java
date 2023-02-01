@@ -22,9 +22,7 @@ public class Player {
 
     public String toString() {
         String print = "Player " + username + " has cards: ";
-        for(int i = 0; i < hand.cards.size(); i++) {
-            print += "(" + hand.cards.get(i).color + ", " + hand.cards.get(i).value + ") ";
-        }
+        print += hand.cards.toString();
 
         return print;
     }
