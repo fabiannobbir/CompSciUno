@@ -14,6 +14,7 @@ class Main{
     //public static Card topCard = new Card();
     public static boolean gameRun = true;
     public static String winner = "";
+    public static int turn = 0;
 
 
   
@@ -52,13 +53,13 @@ class Main{
     public static void play() {
       //int index;
       while(gameRun) {
-        for(int i = 0; i < players.size(); i++) {
-          prompt(i);
+        
+        prompt(turn%players.size());
+        turn++;
 
-
-          System.out.println("________________________________________________________");
+        System.out.println("________________________________________________________");
           
-        }
+        
       }
     }
 
@@ -68,7 +69,7 @@ class Main{
       System.out.println("The top card in the deck is: " + deck.topCard());
       System.out.println("This is " + player.getUsername() + " turn.");
       System.out.println("These are your cards: " + player.getHand());
-      otherPlayers(player);
+      //otherPlayers(player);
       
       if(anyMatching(player)) {
         int index;
