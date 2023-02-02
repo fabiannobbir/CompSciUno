@@ -1,8 +1,9 @@
 package client.card;
 //import java.lang.Math;
+import java.io.Serializable;
 import java.util.*;
 
-public class Hand {
+public class Hand implements Serializable {
     public ArrayList<Card> cards = new ArrayList<Card>();
     Random ran = new Random();
 
