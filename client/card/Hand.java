@@ -21,8 +21,26 @@ public class Hand {
 
     public String toString() {
         String print = "";
+        Card card;
         for(int i = 0; i < cards.size(); i++) {
-            print += "(" + cards.get(i).color + ", " + String.valueOf(cards.get(i).value) + ") ";
+            card = cards.get(i);
+            if(card.value == 10) {
+                print += "(" + card.color + ", " + "Skip" + ") ";
+            } else if (card.value == 11) {
+                print += "(" + card.color + ", " + "Reverse" + ") ";
+            } else if (card.value == 12) {
+                print += "(" + card.color + ", " + "+2" + ") ";
+            } else if (card.value == 13) {
+                print += "(" + card.color + ", " + "+4" + ") ";
+            } else if (card.value == 14) {
+                print += "(" + "Wild" + ") ";
+            } else{
+                print += "(" + card.color + ", " + String.valueOf(card.value) + ") ";
+            }
+            
+
+
+            
         }
 
         return print;

@@ -19,7 +19,7 @@ class Main{
 
   
     public static void main(String[] args) {
-        setup(2);
+        setup(1);
         
 
         play();

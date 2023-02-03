@@ -22,7 +22,7 @@ public class Player {
 
     public String toString() {
         String print = "Player " + username + " has cards: ";
-        print += hand.cards.toString();
+        print += hand.toString();
 
         return print;
     }
