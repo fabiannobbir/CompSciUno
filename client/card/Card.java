@@ -35,4 +35,5 @@ public class Card implements Serializable {
     public String toString() {
         return "(" + color + ", " + value + ")";
     }
+    
 }

@@ -47,4 +47,9 @@ public class Hand implements Serializable {
         return print;
     }
 
+    public String ascii(String color, int value) {
+        return "poop";
+
+    }
+
 }
