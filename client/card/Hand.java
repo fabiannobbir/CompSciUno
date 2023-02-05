@@ -47,40 +47,43 @@ public class Hand implements Serializable {
         } else if (value == 14) {
             return "(" + "Wild" + ") ";
         } else{
-            return regular_cards(color, value);
+            return regular_cards(color, value) + "\n";
         }
 
     }
 
 
     public String regular_cards(String color, int value) {
-        String spaces = "                            ";
-        int size = spaces.length();
-        String print = "[" + color;
-
-        while(print.length() < size-String.valueOf(value).length()-1) {
-            print += " ";
+        String print = "";
+        if(color.equals("Red")) {
+            print += "\n[RED    " + value + "]";
+            print += "\n[        ]";
+            print += "\n[        ]";
+            print += "\n[" + value + "    RED]";
         }
-        print += String.valueOf(value) + "]";
-
-        //the above code essentially is for the first line of the ascii card. It is made weird as to simplfy the coding.
-
-        // for(int i = 0; i < 3; i++) {
-        //     print += "\n[";
-        //     for(int j = 0; j < print.length(); j++) {
-        //         print += spaces;
-        //     }
-        //     print += "]";
-            
-        //}
-        
-        
-
-
-
-
+        if(color.equals("Blue")) {
+            print += "\n[BLUE   " + value + "]";
+            print += "\n[        ]";
+            print += "\n[        ]";
+            print += "\n[        ]";
+            print += "\n[" + value + "   BLUE]";
+        }
+        if(color.equals("Yellow")) {
+            print += "\n[Yellow " + value + "]";
+            print += "\n[        ]";
+            print += "\n[        ]";
+            print += "\n[        ]";
+            print += "\n[" + value + " Yellow]";
+        }
+        if(color.equals("Green")) {
+            print += "\n[Green  " + value + "]";
+            print += "\n[        ]";
+            print += "\n[        ]";
+            print += "\n[        ]";
+            print += "\n[" + value + "  Green]";
+        }
         return print;
-        
     }
+
 
 }
