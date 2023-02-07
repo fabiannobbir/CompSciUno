@@ -24,6 +24,10 @@ public class Hand implements Serializable {
         ArrayList<String> combine = new ArrayList<String>();
         String print = "\n";
         Card card;
+        double limit;
+        
+        limit = cards.size()/4.0;
+        limit = (int)limit;
 
         for(int i = 0; i < 4; i++) {
             combine.add("");
