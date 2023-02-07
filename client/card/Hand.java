@@ -21,19 +21,24 @@ public class Hand implements Serializable {
     }
 
     public String toString() {
-        String[] combine = {"", "", "", ""}; //by default, using new String[4] will contain a null. by creating the string object, it won't print out null :)
+        ArrayList<String> combine = new ArrayList<String>();
         String print = "\n";
         Card card;
-        for(int i = 0; i < combine.length; i++) {
+
+        for(int i = 0; i < 4; i++) {
+            combine.add("");
+        }
+
+        for(int i = 0; i < combine.size(); i++) {
             for(int j = 0; j < cards.size(); j++) {
                 card = cards.get(j);
-                combine[i] += ascii(card.color, card.value)[i] + " ";
+                combine.set(i, combine.get(i) + (ascii(card.color, card.value)[i] + " "));
             }
             
         }
 
-        for(int i = 0; i < combine.length; i++) {
-            print += combine[i] + "\n";
+        for(int i = 0; i < combine.size(); i++) {
+            print += combine.get(i) + "\n";
         }
 
         return print;
