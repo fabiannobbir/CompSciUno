@@ -25,21 +25,48 @@ public class Hand implements Serializable {
         String print = "\n";
         Card card;
         double limit;
-        
-        limit = cards.size()/4.0;
-        limit = (int)limit;
+        int counter;
+        int remaining;
+        limit = cards.size()/20; //amount of cards that can fit on screen
+        counter = (int)(limit); //if 32 cards, limit will be 1.6 and return 1 to assign to counter.
+        remaining = cards.size()%20;
 
-        for(int i = 0; i < 4; i++) {
-            combine.add("");
-        }
+        if(cards.size() <= 20) {
 
-        for(int i = 0; i < combine.size(); i++) {
-            for(int j = 0; j < cards.size(); j++) {
-                card = cards.get(j);
-                combine.set(i, combine.get(i) + (ascii(card.color, card.value)[i] + " "));
+ 
+            for(int i = 0; i < 4; i++) {
+                combine.add("");
+                for(int j = 0; j < cards.size(); j++) {
+                    card = cards.get(j);
+                    combine.set(i, combine.get(i) + (ascii(card.color, card.value)[i] + " "));
+                }
+                
             }
-            
-        }
+
+
+        } else {
+
+            int iterator = 0;  
+            for(int i = 0; i < counter; i++) {
+                for(int k = 0; k < 4; k++) {
+                    combine.add("");
+                
+                    for(int j = iterator; j < iterator + 20; j++) {
+                        card = cards.get(j+iterator/20);
+                        combine.set(k+iterator/20, combine.get(k+iterator/20) + (ascii(card.color, card.value)[i] + " "));
+                    }
+                }
+                iterator += 20;
+            }
+
+            for(int i = 0; i < 4; i++) {
+                combine.add("");
+                for(int j = cards.size()-cards.size()%20; j < cards.size(); j++) {
+                    card = cards.get(j);
+                    combine.set(j+iterator/20, combine.get(j+iterator/20) + (ascii(card.color, card.value)[i] + " "));
+                }
+            }
+        
 
         for(int i = 0; i < combine.size(); i++) {
             print += combine.get(i) + "\n";
