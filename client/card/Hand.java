@@ -67,12 +67,13 @@ public class Hand implements Serializable {
                 }
             }
         
-
+        }
         for(int i = 0; i < combine.size(); i++) {
             print += combine.get(i) + "\n";
         }
 
         return print;
+    
     }
 
     public String[] ascii(String color, int value) {
