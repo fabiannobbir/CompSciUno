@@ -38,17 +38,19 @@ public class Hand implements Serializable {
         //an innermost loop that loops over each card
         //the problem; j represents 1-4, while k represnt 1-20. But by calling cards by .get(i) or .get(k) for each outer loop will return only the cards between 1-20, and the combine segments 1-4. Need to write math function that can somehow mutiply j and k with relation to i. I can simply mutiply i with k and j. However, i may be 0, so i need to add 1 to it.
         //i also need to handle the very last row case. remaining = cards.size()%20 should return the remaining cards.
-        //new problem; i need to split up each 4 elements of the combine array in the print variable below.
+        //new problem; combine.set not assigning elements to correct places in combine array; some elements are totally empty.
         for(int i = 0; i < counter; i++) {
             for(int j = 0; j < 4; j++) {
                 combine.add("");
                 for(int k = 0; k < 20; k++) {
                     card = cards.get(k*(i+1));
-                    combine.set(j*(i+1), combine.get(j*(i+1)) + (ascii(card.color, card.value)[j] + " "));
+                    combine.set(j+(i*4), combine.get(j+(i*4)) + (ascii(card.color, card.value)[j] + " ")); //i*4 to shift the value by 4 each time. do the array indexes on paper to see why. 0123 --> 4567.   
                 }
             }
 
         }
+
+        System.out.println(combine + "\n\n\n");
 
         // if(cards.size() <= 20) {
 
