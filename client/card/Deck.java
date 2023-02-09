@@ -17,11 +17,11 @@ public class Deck implements Serializable {
 
   public String printTopCard() {
     Card card = cards.get(cards.size()-1);
-    String print = "";
-    print += hand.ascii(card.color, card.value)[0];
-    print += hand.ascii(card.color, card.value)[1];
-    print += hand.ascii(card.color, card.value)[2];
-    print += hand.ascii(card.color, card.value)[3];
+    String print = "\n";
+    print += hand.ascii(card.color, card.value)[0] + "\n";
+    print += hand.ascii(card.color, card.value)[1] + "\n";
+    print += hand.ascii(card.color, card.value)[2] + "\n";
+    print += hand.ascii(card.color, card.value)[3] + "\n";
     return print;
   }
 
