@@ -31,45 +31,66 @@ public class Hand implements Serializable {
         counter = (int)(limit); //if 32 cards, limit will be 1.6 and return 1 to assign to counter.
         remaining = cards.size()%20;
 
-        if(cards.size() <= 20) {
+
+        //For every 20 cards, i need to repeat the cross section addition. 
+        //3 loops. an outer loop that repeats for the amount of full cards.
+        //An inner loop that repeat for each cross section and add combine.
+        //an innermost loop that loops over each card
+        //the problem; j represents 1-4, while k represnt 1-20. But by calling cards by .get(i) or .get(k) for each outer loop will return only the cards between 1-20, and the combine segments 1-4. Need to write math function that can somehow mutiply j and k with relation to i. I can simply mutiply i with k and j. However, i may be 0, so i need to add 1 to it.
+        //i also need to handle the very last row case. remaining = cards.size()%20 should return the remaining cards.
+        //new problem; i need to split up each 4 elements of the combine array in the print variable below.
+        for(int i = 0; i < counter; i++) {
+            for(int j = 0; j < 4; j++) {
+                combine.add("");
+                for(int k = 0; k < 20; k++) {
+                    card = cards.get(k*(i+1));
+                    combine.set(j*(i+1), combine.get(j*(i+1)) + (ascii(card.color, card.value)[j] + " "));
+                }
+            }
+
+        }
+
+        // if(cards.size() <= 20) {
 
  
-            for(int i = 0; i < 4; i++) {
-                combine.add("");
-                for(int j = 0; j < cards.size(); j++) {
-                    card = cards.get(j);
-                    combine.set(i, combine.get(i) + (ascii(card.color, card.value)[i] + " "));
-                }
+        //     for(int i = 0; i < 4; i++) {
+        //         combine.add("");
+        //         for(int j = 0; j < cards.size(); j++) {
+        //             card = cards.get(j);
+        //             combine.set(i, combine.get(i) + (ascii(card.color, card.value)[i] + " "));
+        //         }
                 
-            }
+        //     }
 
 
-        } else {
+        // } else {
 
-            int iterator = 0;  
-            for(int i = 0; i < counter; i++) {
-                for(int k = 0; k < 4; k++) {
-                    combine.add("");
+        //     int iterator = 0;  
+        //     for(int i = 0; i < counter; i++) {
+        //         for(int k = 0; k < 4; k++) {
+        //             combine.add("");
                 
-                    for(int j = iterator; j < iterator + 20; j++) {
-                        card = cards.get(j+iterator/20);
-                        combine.set(k+iterator/20, combine.get(k+iterator/20) + (ascii(card.color, card.value)[i] + " "));
-                    }
-                }
-                iterator += 20;
-            }
+        //             for(int j = iterator; j < iterator + 20; j++) {
+        //                 card = cards.get(j+iterator/20);
+        //                 combine.set(k+iterator/20, combine.get(k+iterator/20) + (ascii(card.color, card.value)[i] + " "));
+        //             }
+        //         }
+        //         iterator += 20;
+        //     }
 
-            for(int i = 0; i < 4; i++) {
-                combine.add("");
-                for(int j = cards.size()-cards.size()%20; j < cards.size(); j++) {
-                    card = cards.get(j);
-                    combine.set(j+iterator/20, combine.get(j+iterator/20) + (ascii(card.color, card.value)[i] + " "));
-                }
-            }
+        //     for(int i = 0; i < 4; i++) {
+        //         combine.add("");
+        //         for(int j = cards.size()-cards.size()%20; j < cards.size(); j++) {
+        //             card = cards.get(j);
+        //             combine.set(j+iterator/20, combine.get(j+iterator/20) + (ascii(card.color, card.value)[i] + " "));
+        //         }
+        //     }
         
-        }
+        // }
+
+
         for(int i = 0; i < combine.size(); i++) {
-            print += combine.get(i) + "\n";
+            print += combine.get(i) + "\n"; //4 elements represent one card row.
         }
 
         return print;
