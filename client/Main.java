@@ -19,7 +19,7 @@ class Main{
 
   
     public static void main(String[] args) {
-        setup(1);
+        setup(2);
         
 
         play();
@@ -133,7 +133,7 @@ class Main{
       String print = "";
       for(int i = 0; i < players.size(); i++) {
         if(players.get(i) != player) {
-            print += "[" + players.get(i).getUsername() + ", " + players.get(i).getHand().cards.size()  + "] ";
+          print += "[" + players.get(i).getUsername() + ", " + players.get(i).getHand().cards.size()  + "] ";
         }
       }
       System.out.println(print);
