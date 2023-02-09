@@ -50,7 +50,19 @@ public class Hand implements Serializable {
 
         }
 
-        System.out.println(combine + "\n\n\n");
+        //to deal with the left over cards that do not competle a full 20 cards on the screen.
+        if(remaining != 0) {
+            for(int j = 0; j < 4; j++) {
+                combine.add("");
+                for(int k = 0; k < remaining; k++) {
+                    card = cards.get(k*(counter+1));
+                    combine.set(j+(counter*4), combine.get(j+(counter*4)) + (ascii(card.color, card.value)[j] + " ")); //i*4 to shift the value by 4 each time. do the array indexes on paper to see why. 0123 --> 4567.   
+                }
+            }
+        }
+
+
+        //System.out.println(combine + "\n\n\n");
 
         // if(cards.size() <= 20) {
 
