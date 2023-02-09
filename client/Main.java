@@ -66,7 +66,7 @@ class Main{
 
     public static void prompt(int playerIndex) {
       Player player = players.get(playerIndex);
-      System.out.println("The top card in the deck is: " + deck.topCard());
+      System.out.println("The top card in the deck is: " + deck.printTopCard());
       System.out.println("This is " + player.getUsername() + " turn.");
       System.out.println("These are your cards: " + player.getHand());
       //otherPlayers(player);
