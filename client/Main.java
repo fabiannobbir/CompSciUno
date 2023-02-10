@@ -66,8 +66,9 @@ class Main{
 
     public static void prompt(int playerIndex) {
       Player player = players.get(playerIndex);
+      System.out.println("These are the other players cards: " + otherPlayers(player));
+      
       System.out.println("The top card in the deck is: " + deck.printTopCard());
-      otherPlayers(player);
       System.out.println("This is " + player.getUsername() + " turn.");
       System.out.println("These are your cards: " + player.getHand());
       
@@ -128,15 +129,15 @@ class Main{
       }
     }
 
-    public static void otherPlayers(Player player) {
+    public static String otherPlayers(Player player) {
       //ArrayList<Player> others = new ArrayList<Player>();
       String print = "";
       for(int i = 0; i < players.size(); i++) {
         if(players.get(i) != player) {
-          print += "[" + players.get(i).getUsername() + ", " + players.get(i).getHand().cards.size()  + "] ";
+          print += "[" + players.get(i).getUsername() + ", " + players.get(i).getHand().cards.size()  + " cards] ";
         }
       }
-      System.out.println(print);
+      return print;
   }
 
 }
