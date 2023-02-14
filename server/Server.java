@@ -2,24 +2,25 @@ package server;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Random;
 
 public class Server {
-    private volatile HashMap<Long, Game> games;
+    private volatile LinkedHashMap<Long, Game> games;
     private boolean isRunning;
 
     public Server(){
-        games = new HashMap<>();
+        games = new LinkedHashMap<>();
     }
 
     public long addGame(Game game){
         long gameID = genID();
         games.put(gameID, game);
-        System.out.println("Game of ID " + gameID + " added.");
+        System.out.println("Game \"" + game.getPlayers().get(0).getUsername() + "\" with ID " + gameID + " added.");
         return gameID;
     }
 
-    public HashMap<Long, Game> getGames(){
+    public LinkedHashMap<Long, Game> getGames(){
         return games;
     }
 

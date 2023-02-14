@@ -14,6 +14,11 @@ public class Hand implements Serializable {
         }
     }
 
+    public Hand(){}
+
+    public void addCard(Card card){
+        cards.add(card);
+    }
 
     public void addToDeck(int index, Deck deck) {
         deck.cards.add(cards.get(index));

@@ -35,5 +35,9 @@ public class Card implements Serializable {
     public String toString() {
         return "(" + color + ", " + value + ")";
     }
+
+    public static boolean isCompatible(Card card1, Card card2){
+        return card1.color.equals(card2.color) || card1.value == card2.value;
+    }
     
 }

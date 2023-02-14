@@ -12,7 +12,7 @@ public class Player implements Serializable {
     
     public Player(String username, int numCards) {
         this.username = username;
-        this.id = 123412341324L;//genID();
+        this.id = genID();
         hand = new Hand(numCards);
     }
 
@@ -22,9 +22,7 @@ public class Player implements Serializable {
     }
 
     public String toString() {
-        String print = "Player " + username + " has cards: ";
-        print += hand.toString();
-
+        String print = "(" + username + " has " + hand.cards.size() + " cards)";
         return print;
     }
 

@@ -46,7 +46,7 @@ public class API {
 
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            System.out.println("Connection! " + exchange.getRequestURI().toString());
+            //System.out.println("Connection! " + exchange.getRequestURI().toString());
             ObjectOutputStream objectOutputStream;
             ObjectInputStream objectInputStream;
             Game game;
@@ -102,6 +102,8 @@ public class API {
                     gameID = Long.parseLong(exchange.getRequestHeaders().get("Game-ID").get(0));
                     int cardIndex = Integer.parseInt(exchange.getRequestHeaders().get("Card-Index").get(0));
                     server.getGame(gameID).play(clientID, cardIndex);
+                    System.out.println("Game " + server.getGame(gameID).toString() + " " + cardIndex);
+                    exchange.sendResponseHeaders(200, 0);
                     break;
 
                 case("join"):

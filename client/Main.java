@@ -1,6 +1,10 @@
 package client;
 
 import client.card.*;
+import client.client.ConnectionHandler;
+import server.Game;
+
+import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -8,131 +12,32 @@ import java.util.ArrayList;
 //TODO: create computer bot.
 
 class Main{
-    public static ArrayList<Player> players = new ArrayList<Player>();
-    public static Scanner reader = new Scanner(System.in);
-    public static Deck deck = new Deck();
-    //public static Card topCard = new Card();
-    public static boolean gameRun = true;
-    public static String winner = "";
-    public static int turn = 0;
+    private static Scanner reader = new Scanner(System.in);
+    private static int turn = 0;
+    private static ConnectionHandler connectionHandler;
+    /*
+    * Ask the player for their name
+    * Ask if they want to join or create a game
+    * Create:
+    *       ask use for the number of players
+    *       create a game object and send it to the server
+    * join:
+    *    ask the server for the currently available games
+    *    join the selected one, (print the games as:
+    *       [1] Ryan's Game
+    *
+    * The game loop will work as the following
+    *   1. Ask the server for the game object
+    *   2. If the new object turn number > local turn number: update local object and re-render
+    *   3. If it is the player's turn, they will select a card from their hand.
+    *       The CLIENT will decide what cards are valid to place
+    *   4. If the client cannot place a card, they will use turn(-1). The server will then randomly add a card to their deck and move on to the next player.
+    *
+    * 1-4 repeats until someone places down their last card
+    **/
 
-
-  
     public static void main(String[] args) {
-        setup(1);
-        
-
-        play();
-
-        System.out.println(winner + " Wins");
-    }
-
-
-    
-
-    public static void setup(int player_count) {
-        String username;
-        //String id;
-        int numCards;
-
-        for(int i = 0; i < player_count; i++) {
-            System.out.println("Username: ");
-            username = reader.nextLine();
-            System.out.println("numCards: ");
-            numCards = reader.nextInt();
-
-            players.add(new Player(username, numCards));
-            reader.nextLine(); //this is to clear the input buffer  https://www.freecodecamp.org/news/java-scanner-nextline-call-gets-skipped-solved/
-        }
-        
-        
-        //System.out.println(players.get(0));
-    }
-
-
-    public static void play() {
-      //int index;
-      while(gameRun) {
-        
-        prompt(turn%players.size());
-        turn++;
-
-        System.out.println("________________________________________________________");
-          
-        
-      }
-    }
-
-
-    public static void prompt(int playerIndex) {
-      Player player = players.get(playerIndex);
-      System.out.println("The top card in the deck is: " + deck.topCard());
-      System.out.println("This is " + player.getUsername() + " turn.");
-      System.out.println("These are your cards: " + player.getHand());
-      //otherPlayers(player);
-      
-      if(anyMatching(player)) {
-        int index;
-        System.out.println("What card would you like to put down?");
-        index = reader.nextInt();
-        reader.nextLine(); //input buffer
-        
-        if(checkCard(player, index)) {
-          player.getHand().addToDeck(index, deck);
-        }else {
-          System.out.println("This is not a valid card. Try again.");
-          prompt(playerIndex);
-        }
-      } else {
-        System.out.println("There are no cards able to be placed. Enter any key to add a card to your deck.");
-        //System.out.println("do not skip this line");
-        //BUG: skips this prompt?!?! SOLVED https://www.freecodecamp.org/news/java-scanner-nextline-call-gets-skipped-solved/ added an extra nextline in the setup function
-        reader.nextLine();
-        player.getHand().cards.add(new Card());
-        prompt(playerIndex);
-      }
-
-      checkWin();
-      
-    }
-
-    public static boolean anyMatching(Player player) {
-      //if there are no possible cards to be placed down in comparision with the top of the deck, then this will return false.
-      ArrayList<Card> playerCards = player.getHand().cards;
-      for(int i = 0; i < playerCards.size(); i++) {
-        if(playerCards.get(i).value == deck.topCard().value || playerCards.get(i).color.equals(deck.topCard().color)) {
-            return true;
-        }
-      }
-      
-      return false;
-    }
-    
-    public static boolean checkCard(Player player, int index) {
-      //Checks if the player may actually add the card on top of the stack, and will disallow them if it does not have the same color or number.
-      Card playerCard = player.getHand().cards.get(index);
-      if(deck.topCard().value == playerCard.value || deck.topCard().color.equals(playerCard.color)) {
-        return true;
-      }
-      return false;
-    }
-
-
-    public static void checkWin() {
-      for(int i = 0; i < players.size(); i++) {
-        if(players.get(i).getHand().cards.size() == 0) {
-          gameRun = false;
-          winner = players.get(i).getUsername();
-        }
-      }
-    }
-
-    public static void otherPlayers(Player player) {
-        for(int i = 0; i < players.size(); i++) {
-          if(players.get(i) != player) {
-              System.out.println(players.get(i));
-          }
-        }
+        Uno uno = new Uno();
     }
 
 }

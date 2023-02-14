@@ -8,6 +8,7 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Random;
 
 public class ConnectionHandler {
@@ -16,13 +17,12 @@ public class ConnectionHandler {
     private final String serverIP = "http://127.0.0.1:9090/";
     public ConnectionHandler(Player player) {
         this.player =  player;
-        System.out.println("Client initialized with id " + player.getId());
-        this.gameID = 2308216752978325504L;
+        this.gameID = -1L;
     }
 
 
 
-    public HashMap<Long, Game> getGames() throws IOException, ClassNotFoundException{
+    public LinkedHashMap<Long, Game> getGames() throws IOException, ClassNotFoundException{
         URL url = new URL(serverIP + "games");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
@@ -30,7 +30,7 @@ public class ConnectionHandler {
         connection.setUseCaches(false);
 
         ObjectInputStream objectInputStream = new ObjectInputStream(connection.getInputStream());
-        HashMap<Long, Game> games = (HashMap<Long, Game>) objectInputStream.readObject();
+        LinkedHashMap<Long, Game> games = (LinkedHashMap<Long, Game>) objectInputStream.readObject();
         objectInputStream.close();
         connection.disconnect();
 
@@ -50,7 +50,6 @@ public class ConnectionHandler {
         Game game = (Game) objectInputStream.readObject();
         objectInputStream.close();
         connection.disconnect();
-
         return game;
     }
 
@@ -74,9 +73,6 @@ public class ConnectionHandler {
                         new String(gameIDBytes, StandardCharsets.UTF_8)
                 );
         connection.disconnect();
-
-        //TODO remove
-        System.out.println(gameID);
     }
 
     public void takeTurn(int cardIndex) throws IOException {
@@ -88,6 +84,7 @@ public class ConnectionHandler {
         connection.setRequestProperty("Client-ID", String.valueOf(player.getId()));
         connection.setRequestProperty("Game-ID", String.valueOf(gameID));
         connection.setRequestProperty("Card-Index", String.valueOf(cardIndex));
+        connection.getResponseCode(); //For some reason this is needed
         connection.disconnect();
     }
 
@@ -102,6 +99,7 @@ public class ConnectionHandler {
         objectOutputStream.writeObject(player);
         connection.getResponseCode(); //For some reason this is needed
         connection.disconnect();
+        gameID = id;
     }
 
 
