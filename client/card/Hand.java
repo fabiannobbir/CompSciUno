@@ -7,7 +7,7 @@ public class Hand implements Serializable {
     public ArrayList<Card> cards = new ArrayList<Card>();
     Random ran = new Random();
 
-
+    //creates a hand with x amount of cards
     public Hand(int count) {
         for(int i = 0; i < count; i++) {
             cards.add(new Card());
@@ -20,6 +20,7 @@ public class Hand implements Serializable {
         cards.add(card);
     }
 
+    //removes a card from the hand and adds it to a deck
     public void addToDeck(int index, Deck deck) {
         deck.cards.add(cards.get(index));
         cards.remove(index);
@@ -65,48 +66,6 @@ public class Hand implements Serializable {
                 }
             }
         }
-
-
-        //System.out.println(combine + "\n\n\n");
-
-        // if(cards.size() <= 20) {
-
- 
-        //     for(int i = 0; i < 4; i++) {
-        //         combine.add("");
-        //         for(int j = 0; j < cards.size(); j++) {
-        //             card = cards.get(j);
-        //             combine.set(i, combine.get(i) + (ascii(card.color, card.value)[i] + " "));
-        //         }
-                
-        //     }
-
-
-        // } else {
-
-        //     int iterator = 0;  
-        //     for(int i = 0; i < counter; i++) {
-        //         for(int k = 0; k < 4; k++) {
-        //             combine.add("");
-                
-        //             for(int j = iterator; j < iterator + 20; j++) {
-        //                 card = cards.get(j+iterator/20);
-        //                 combine.set(k+iterator/20, combine.get(k+iterator/20) + (ascii(card.color, card.value)[i] + " "));
-        //             }
-        //         }
-        //         iterator += 20;
-        //     }
-
-        //     for(int i = 0; i < 4; i++) {
-        //         combine.add("");
-        //         for(int j = cards.size()-cards.size()%20; j < cards.size(); j++) {
-        //             card = cards.get(j);
-        //             combine.set(j+iterator/20, combine.get(j+iterator/20) + (ascii(card.color, card.value)[i] + " "));
-        //         }
-        //     }
-        
-        // }
-
 
         for(int i = 0; i < combine.size(); i++) {
             print += combine.get(i) + "\n"; //4 elements represent one card row.

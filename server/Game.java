@@ -14,12 +14,12 @@ import java.util.Arrays;
 * */
 
 public class Game implements Serializable {
-    private Card topCard;
-    private int turnNumber;
+    private Card topCard; //the card on the top of a pile
+    private int turnNumber; //the number of turns that have been played
     private boolean gameStarted;
-    private int playerTurnIndex;
+    private int playerTurnIndex; //the index of the player array who's turn it is
     private ArrayList<Player> players = new ArrayList<Player>();
-    private int numPlayers;
+    private final int numPlayers;
 
     //TODO Implement
 
@@ -32,7 +32,7 @@ public class Game implements Serializable {
     }
 
 
-    //this function plays
+    //this function plays a card from a specific player
     public void play(long playerID, int cardIndex){
         if(players.get(playerTurnIndex).getId() != playerID) return;
         if(cardIndex < 0){
@@ -52,6 +52,7 @@ public class Game implements Serializable {
         }
     }
 
+    //does special updates to the game object
     private void specialCardPlay(){
         switch (topCard.value){
             case 10: //skip
@@ -95,6 +96,7 @@ public class Game implements Serializable {
         turnNumber++;
     }
 
+    //returns a player from their id
     public Player getPlayer(long ID){
         for(Player player: players){
             if(ID == player.getId()){
@@ -104,6 +106,7 @@ public class Game implements Serializable {
         return null;
     }
 
+    //determines if a player has joined
     public boolean hasPlayer(long playerID){
         for(Player player: players){
             if(player.getId() == playerID){
@@ -113,6 +116,7 @@ public class Game implements Serializable {
         return false;
     }
 
+    //checks if a player has won
     public boolean hasPlayerWon(){
         for(Player player: players){
             if(player.getHand().cards.size() == 0) return true;
@@ -120,6 +124,7 @@ public class Game implements Serializable {
         return false;
     }
 
+    //adds a player to the player array
     public boolean addPlayer(Player player){
         if(getPlayer(player.getId()) != null) return false;
         if(gameStarted) return false;
@@ -131,10 +136,12 @@ public class Game implements Serializable {
         return true;
     }
 
+    //increments the turn index
     private void updateTurnIndex(int step){
         playerTurnIndex = (playerTurnIndex + step) % players.size();
     }
 
+    //getters and setters
     @Override
     public String toString(){
         return players.get(0).getUsername() + "'s game, with (" + players.size() + "/" + numPlayers + ")";

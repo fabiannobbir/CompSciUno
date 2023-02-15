@@ -14,18 +14,18 @@ import java.util.Scanner;
 
 public class Uno {
 
-    private ConnectionHandler connectionHandler;
-    private Scanner scanner;
-    private Game game;
-    private Player myPlayer;
-    int turnNumber = -2;
+    private ConnectionHandler connectionHandler; // ConnectionHandler object to handle communication with server
+    private Scanner scanner; // Scanner object for user input
+    private Game game; // Game object to store current game state
+    private Player myPlayer; // Player object to store current player's information
+    int turnNumber = -2; // Current turn number initialized to -2
 
     public Uno(){
-        scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in); // Create a new Scanner object for user input
         System.out.print("Hello, welcome to uno!\nWhat's your name? ");
         String username = scanner.nextLine();
-        myPlayer = new Player(username, 7);
-        connectionHandler = new ConnectionHandler(myPlayer);
+        myPlayer = new Player(username, 7); // Create a new Player object with a specified name and a hand with 7 cards
+        connectionHandler = new ConnectionHandler(myPlayer); // Create a new ConnectionHandler object with myPlayer
 
         String createOrJoin = null;
         while(true){
@@ -39,9 +39,9 @@ public class Uno {
         }
 
         if(createOrJoin.equalsIgnoreCase("j")){
-            joinGame();
+            joinGame(); // Call joinGame method to connect to an existing game
         }else{
-            createGame();
+            createGame(); // Call createGame method to create a new game
         }
     }
 
@@ -60,26 +60,22 @@ public class Uno {
             try {
                 Thread.sleep(500);
             } catch (Exception ignored){}
-            if(updateGame()) { //TODO wont update screen :/
-                myPlayer = game.getPlayer(myPlayer.getId());
-                boolean myTurn = false;
-                if (game.playersTurn() == myPlayer.getId()) {
-                    myTurn = true;
-                }
-                render(myTurn);
-                if (checkWinner()) break;
+            myPlayer = game.getPlayer(myPlayer.getId()); // Update the current player's information
+            boolean myTurn = false;
+            if (game.playersTurn() == myPlayer.getId()) {
+                myTurn = true;
             }
+            render(myTurn); // Call the render method to display the game state
+            if (checkWinner()) break; // Check if a player has won the game
         }
     }
 
     private boolean checkWinner(){
-        if(game.hasPlayerWon()){
+        if(game.hasPlayerWon()){ // Check if a player has won the game
             if(game.getPlayer(myPlayer.getId()).getHand().cards.size() == 0){
-                //TODO
-                //you won!!!
+                System.out.println("You win!");
             }else{
-                //TODO
-                //you lose :(
+                System.out.println("You lose :(");
             }
             return true;
         }
@@ -93,7 +89,7 @@ public class Uno {
             String input = scanner.nextLine();
             if(input.equals("")){
                 try {
-                    connectionHandler.takeTurn(-1);
+                    connectionHandler.takeTurn(-1); // Draw a card and skip turn if the user pressed enter
                 } catch (IOException e) {
                     System.out.println("FATAL SERVER ERROR");
                     throw new RuntimeException(e);
@@ -101,6 +97,7 @@ public class Uno {
                 break;
             }
 
+            //gets user input for the card they're selecting
             try {
                 selection = Integer.parseInt(input);
                 if(selection < 0 || selection > myPlayer.getHand().cards.size()-1) throw new Exception();
@@ -108,6 +105,8 @@ public class Uno {
                 System.out.println("Please type a number from 0 to " + (myPlayer.getHand().cards.size()-1));
                 continue;
             }
+
+            //checks if the selection is valid
             if(Card.isCompatible(myPlayer.getHand().cards.get(selection), game.getTopCard())){
                 try {
                     connectionHandler.takeTurn(selection);
@@ -123,6 +122,7 @@ public class Uno {
 
     }
 
+    //renders the current game
     private void render(boolean isMyTurn){
         for(Player player: game.getPlayers()){
             if(player.getId() == myPlayer.getId()) continue;
@@ -138,6 +138,8 @@ public class Uno {
             playCard();
         }
     }
+
+    //updates the game if it's needed
     private boolean updateGame(boolean force){
         try {
             Game currentGame = connectionHandler.update();
@@ -153,6 +155,7 @@ public class Uno {
         }
     }
 
+    //updates the game if it's needed
     private boolean updateGame(){
         try {
             Game currentGame = connectionHandler.update();
@@ -168,10 +171,10 @@ public class Uno {
         }
     }
 
-
+    //creates a game and pushes it to the server
     private void createGame(){
         int numPlayers;
-        while (true) {
+        while (true) { //selects the number of players
             System.out.println("How many players would you like to play with? (2-4)");
             String numPlayersIn = scanner.nextLine();
             try {
@@ -185,6 +188,7 @@ public class Uno {
             }
         }
         try {
+            //sends them to the server
             Game myGame = new Game(numPlayers);
             connectionHandler.makeGame(myGame);
             game = myGame;
@@ -195,6 +199,7 @@ public class Uno {
         play();
     }
 
+    //joins a game already on the server
     private void joinGame(){
         LinkedHashMap<Long, Game> games;
 
@@ -205,6 +210,7 @@ public class Uno {
             throw new RuntimeException("FATAL SERVER ERROR");
         }
 
+        //removes game that have already started
         Long[] rawKeys = new Long[games.keySet().size()];
         games.keySet().toArray(rawKeys);
         ArrayList<Long> keys = new ArrayList<>(Arrays.asList(rawKeys));
@@ -223,7 +229,7 @@ public class Uno {
         }
 
         int gameNum = 10000;
-        while(true) {
+        while(true) { //gets the game the user selected
             try {
                 String choice = scanner.nextLine();
                 gameNum = Integer.parseInt(choice);

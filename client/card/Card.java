@@ -20,12 +20,12 @@ public class Card implements Serializable {
     * */
   
     public Card(int col, int value) {
-      //pretty sure unused.
         this.color = colors[col];
         this.value = value;
 
     }
-    
+
+    //Returns a random card
     public Card() {
       this.color = colors[ran.nextInt(4)];
       this.value = ran.nextInt(14)+1;
@@ -36,6 +36,7 @@ public class Card implements Serializable {
         return "(" + color + ", " + value + ")";
     }
 
+    //Checks if a card can be placed onto another card
     public static boolean isCompatible(Card card1, Card card2){
         return card1.color.equals(card2.color) || card1.value == card2.value;
     }

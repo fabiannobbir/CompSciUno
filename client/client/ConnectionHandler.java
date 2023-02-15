@@ -20,8 +20,7 @@ public class ConnectionHandler {
         this.gameID = -1L;
     }
 
-
-
+    // Retrieve the list of available games from the server
     public LinkedHashMap<Long, Game> getGames() throws IOException, ClassNotFoundException{
         URL url = new URL(serverIP + "games");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -37,6 +36,7 @@ public class ConnectionHandler {
         return games;
     }
 
+    // Retrieve the current state of the game from the server
     public Game update() throws IOException, ClassNotFoundException {
         URL url = new URL(serverIP + "update");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -53,6 +53,7 @@ public class ConnectionHandler {
         return game;
     }
 
+    // Create a new game on the server with the specified initial state
     public void makeGame(Game game) throws IOException, ClassNotFoundException {
 
         game.addPlayer(player);
@@ -75,6 +76,7 @@ public class ConnectionHandler {
         connection.disconnect();
     }
 
+    // Send the player's chosen card to the server to take their turn
     public void takeTurn(int cardIndex) throws IOException {
         URL url = new URL(serverIP + "turn");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -88,6 +90,7 @@ public class ConnectionHandler {
         connection.disconnect();
     }
 
+    // Join an existing game on the server with the specified ID
     public void joinGame(long id) throws IOException {
         URL url = new URL(serverIP + "join");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -102,7 +105,7 @@ public class ConnectionHandler {
         gameID = id;
     }
 
-
+    // Calculate the size of an object in bytes using serialization
     public static int sizeof(Object obj) throws IOException {
 
         ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();

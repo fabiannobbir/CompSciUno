@@ -53,6 +53,7 @@ public class API {
             long gameID;
             long clientID;
             switch (exchange.getRequestURI().toString().replace("/", "")){
+                //returns the games from the server
                 case("games"):
                     exchange.sendResponseHeaders(200, sizeof(server.getGames()));
                     objectOutputStream = new ObjectOutputStream(exchange.getResponseBody());
@@ -61,6 +62,7 @@ public class API {
                     objectOutputStream.close();
                     break;
 
+                //returns the current state of a game
                 case("update"):
                     clientID = Long.parseLong(exchange.getRequestHeaders().get("Client-ID").get(0));
                     gameID = Long.parseLong(exchange.getRequestHeaders().get("Game-ID").get(0));
@@ -82,6 +84,7 @@ public class API {
                     objectOutputStream.close();
                     break;
 
+                //creates a game on the server
                 case("game"):
                     objectInputStream = new ObjectInputStream(exchange.getRequestBody());
                     try {
@@ -96,18 +99,18 @@ public class API {
                         throw new RuntimeException(e);
                     }
                     break;
-
+                //takes a turn on the server
                 case("turn"):
-                    clientID = Long.parseLong(exchange.getRequestHeaders().get("Client-ID").get(0));
+                clientID = Long.parseLong(exchange.getRequestHeaders().get("Client-ID").get(0));
                     gameID = Long.parseLong(exchange.getRequestHeaders().get("Game-ID").get(0));
                     int cardIndex = Integer.parseInt(exchange.getRequestHeaders().get("Card-Index").get(0));
                     server.getGame(gameID).play(clientID, cardIndex);
                     System.out.println("Game " + server.getGame(gameID).toString() + " " + cardIndex);
                     exchange.sendResponseHeaders(200, 0);
                     break;
-
+                //joins a game
                 case("join"):
-                    gameID = Long.parseLong(exchange.getRequestHeaders().get("Game-ID").get(0));
+                gameID = Long.parseLong(exchange.getRequestHeaders().get("Game-ID").get(0));
 
                     objectInputStream = new ObjectInputStream(exchange.getRequestBody());
                     Player player;
@@ -129,6 +132,7 @@ public class API {
             }
         }
 
+        //utility function that gets the size of a serialized object
         public static int sizeof(Object obj) throws IOException {
 
             ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
